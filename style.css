@@ -1,438 +1,484 @@
+/* Importando fontes elegantes do Google Fonts (se houver conexão) */
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;1,400&family=Inter:wght@300;400;600&display=swap');
+
 :root {
-    /* --- Paleta de Cores --- */
-    --bg-page: #f9f8f4;      /* Papel antigo suave */
+    /* --- Paleta de Cores (Estilo Dark Academia Suave) --- */
+    --bg-page: #f2f0eb;      /* Bege acinzentado (papel premium) */
     --bg-card: #ffffff;      /* Branco puro */
-    --text-main: #2c2c2c;    /* Cinza escuro */
-    --primary: #2c3e50;      /* Azul Petróleo */
-    --accent: #c0392b;       /* Terracota */
-    --success: #27ae60;      /* Verde */
+    --text-main: #2d3436;    /* Cinza chumbo */
+    --text-light: #636e72;   /* Cinza médio */
     
-    /* --- Design System --- */
-    --border-radius: 6px;
-    --shadow-soft: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
-    --shadow-hover: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.04);
+    --primary: #2c3e50;      /* Azul Petróleo Profundo */
+    --primary-hover: #1a252f;
     
-    /* --- Tipografia --- */
-    --font-serif: 'Georgia', 'Times New Roman', serif;
-    --font-sans: 'Inter', 'Segoe UI', 'Helvetica Neue', sans-serif;
+    --accent: #8e44ad;       /* Roxo sutil para detalhes ou foco */
+    --danger: #c0392b;       /* Vermelho terracota */
+    --success: #27ae60;      /* Verde esmeralda */
+    
+    /* --- Geometria e Sombras --- */
+    --radius: 8px;
+    --shadow-card: 0 10px 30px rgba(0,0,0,0.08);
+    --shadow-btn: 0 4px 6px rgba(0,0,0,0.1);
 }
 
-/* --- Base --- */
+/* === RESET E BASE === */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
 body {
-    font-family: var(--font-sans);
+    font-family: 'Inter', sans-serif;
     background-color: var(--bg-page);
     color: var(--text-main);
-    margin: 0;
-    padding: 40px 20px;
     line-height: 1.6;
+    padding: 40px 20px;
     display: flex;
     flex-direction: column;
+    align-items: center;
     min-height: 100vh;
 }
 
 h1, h2, h3 {
-    font-family: var(--font-serif);
+    font-family: 'Merriweather', serif;
     color: var(--primary);
-    margin-bottom: 1.5rem;
-    text-align: center;
-    font-weight: normal;
+    margin-bottom: 1rem;
 }
 
 h1 {
-    font-size: 2.5rem;
-    border-bottom: 3px double var(--accent);
-    display: inline-block;
-    align-self: center;
-    padding-bottom: 10px;
-    margin-top: 0;
+    font-size: 2.8rem;
+    text-align: center;
+    position: relative;
+    padding-bottom: 15px;
+    margin-bottom: 40px;
+}
+
+h1::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 3px;
+    background-color: var(--danger);
+    margin: 10px auto 0;
 }
 
 a {
-    color: var(--primary);
     text-decoration: none;
+    color: inherit;
+    transition: 0.3s;
+}
+
+/* === BOTÕES (Padronização Total) === */
+button, 
+.btn-lido, 
+.btn-desmarcar, 
+.btn-voltar,
+input[type="submit"] {
+    font-family: 'Inter', sans-serif;
     font-weight: 600;
-    transition: color 0.2s;
+    font-size: 0.9rem;
+    padding: 12px 28px;
+    border: none;
+    border-radius: 50px; /* Botões arredondados modernos */
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: var(--shadow-btn);
+    background-color: var(--primary);
+    color: white;
+    margin: 5px;
+    text-align: center;
 }
 
-a:hover {
-    color: var(--accent);
+button:hover, 
+.btn-lido:hover, 
+input[type="submit"]:hover {
+    background-color: var(--primary-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
 }
 
-/* --- Formulários --- */
+/* Variação: Botão Voltar (Outline) */
+.btn-voltar, button[onclick*="window.location"] {
+    background-color: transparent;
+    border: 2px solid var(--primary);
+    color: var(--primary);
+    box-shadow: none;
+}
+
+.btn-voltar:hover, button[onclick*="window.location"]:hover {
+    background-color: var(--primary);
+    color: white;
+}
+
+/* Variação: Botão Desmarcar/Sair (Danger ou Outline Danger) */
+.btn-desmarcar {
+    background-color: white;
+    color: var(--success);
+    border: 2px solid var(--success);
+}
+.btn-desmarcar:hover {
+    background-color: var(--success);
+    color: white;
+}
+
+/* Botões soltos no final da página (Ex: Sair, Cadastrar) */
+body > button {
+    margin-top: 20px;
+    min-width: 200px;
+}
+
+/* === FORMULÁRIOS === */
 form {
     background: var(--bg-card);
     padding: 40px;
-    max-width: 550px;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-card);
     width: 100%;
-    margin: 30px auto;
-    border: 1px solid #e0e0e0;
-    border-radius: var(--border-radius);
-    box-shadow: var(--shadow-soft);
+    max-width: 500px;
+    margin-bottom: 30px;
     display: flex;
     flex-direction: column;
-    gap: 15px;
-    position: relative;
+    gap: 20px;
+    position: relative; /* Necessário para posicionar as sugestões corretamente */
 }
 
-form br { display: none; }
+/* Remove quebras de linha manuais dentro do form flex */
+form br {
+    display: none;
+}
 
-input, textarea, select {
+/* Inputs */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+textarea,
+select {
     width: 100%;
-    padding: 14px 16px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+    padding: 14px 18px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    background-color: #fafafa;
     font-size: 1rem;
     font-family: inherit;
-    background-color: #fafafa;
-    transition: all 0.3s ease;
-    box-sizing: border-box;
+    transition: 0.3s;
 }
 
 input:focus, textarea:focus {
     outline: none;
     border-color: var(--primary);
     background-color: #fff;
-    box-shadow: 0 0 0 3px rgba(44, 62, 80, 0.1);
+    box-shadow: 0 0 0 4px rgba(44, 62, 80, 0.1);
     position: relative;
     z-index: 50;
 }
 
-textarea { resize: vertical; min-height: 120px; }
+textarea {
+    min-height: 120px;
+    resize: vertical;
+}
 
-form label {
-    display: flex;
+/* Formulário de Busca (Estilo Pílula) */
+body > form[action="livros.php"] {
+    flex-direction: row;
+    padding: 8px;
+    border-radius: 100px;
+    max-width: 600px;
+    gap: 0;
     align-items: center;
-    gap: 8px;
-    cursor: pointer;
-    font-weight: 500;
-    margin-bottom: 5px;
+    border: 1px solid #ddd;
 }
 
-form input[type="radio"] { width: auto; margin: 0; }
-
-/* --- Botões Gerais (Cadastro, Login) --- */
-button {
-    background-color: var(--primary);
-    color: white;
+body > form[action="livros.php"] input {
     border: none;
-    padding: 12px 24px;
-    font-size: 0.9rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    display: inline-block;
-    text-align: center;
-    align-self: center;
+    background: transparent;
+    box-shadow: none;
+    padding-left: 25px;
 }
 
-button:hover {
-    background-color: #34495e;
-    transform: translateY(-2px);
-}
-
-/* Botões soltos (como Sair, Novo Livro fora do form) */
-body > button {
-    background-color: transparent;
-    color: #666;
-    border: 1px solid #ccc;
-    margin-top: 15px;
+body > form[action="livros.php"] button {
+    border-radius: 100px;
+    padding: 10px 35px;
+    margin: 4px;
     box-shadow: none;
 }
 
-body > button:hover {
-    border-color: var(--primary);
-    color: var(--primary);
-    background-color: white;
-}
-
-/* --- Grade de Livros (Estante) --- */
+/* === GRID DE LIVROS (ESTANTE) === */
 .livro-lista {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
     gap: 30px;
     width: 100%;
     max-width: 1200px;
-    margin: 40px auto;
+    padding: 20px;
 }
 
 .livro-item {
     background: var(--bg-card);
-    border: 1px solid #eee;
-    border-radius: var(--border-radius);
-    padding: 20px;
-    box-shadow: var(--shadow-soft);
-    transition: all 0.3s ease;
+    border-radius: var(--radius);
+    padding: 25px 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
-    height: 100%;
-    position: relative; /* Essencial para a tag LIDO */
-    box-sizing: border-box;
-    overflow: hidden;
+    position: relative; /* CRUCIAL para a tag LIDO */
+    box-shadow: var(--shadow-card);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    overflow: hidden; /* Mantém a tag dentro do card */
+    border: 1px solid rgba(0,0,0,0.02);
 }
 
 .livro-item:hover {
-    transform: translateY(-5px);
-    box-shadow: var(--shadow-hover);
-    border-color: transparent;
+    transform: translateY(-8px);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.12);
 }
 
 .livro-item img {
-    width: 150px;
-    height: 225px;
+    width: 140px;
+    height: 210px;
     object-fit: cover;
-    border-radius: 3px;
-    box-shadow: 2px 4px 8px rgba(0,0,0,0.15);
-    margin-bottom: 15px;
-    margin-top: 15px;
-}
-
-.livro-item a:first-of-type + br + a {
-    font-family: var(--font-serif);
-    font-size: 1.2rem;
-    color: var(--primary);
-    line-height: 1.3;
-    margin-bottom: 5px;
-    display: block;
-}
-
-.livro-item { font-size: 0.95rem; color: #666; }
-
-/* === TAG LIDO (ESTANTE) - ESTILO PROFISSIONAL === */
-.tag-lido, span[style*="color: green"] {
-    position: absolute !important;
-    top: 15px !important;
-    right: 15px !important;
-    background-color: var(--success) !important;
-    color: white !important;
-    font-size: 0.7rem !important;
-    padding: 4px 10px !important;
-    border-radius: 20px !important;
-    font-weight: 700 !important;
-    text-transform: uppercase !important;
-    letter-spacing: 0.5px !important;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2) !important;
-    z-index: 10 !important;
-    /* Remove estilos padrão que possam vir inline do PHP antigo */
-    display: inline-block !important;
-    width: auto !important;
-}
-
-/* Botões de Editar/Excluir no Card */
-.livro-item a[href*='excluirLivro.php'],
-.livro-item a[href*='editarLivro.php'] {
-    display: block;
-    width: 80%;
-    padding: 8px 0;
-    margin: 5px auto;
     border-radius: 4px;
-    font-size: 0.8rem;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    font-weight: bold;
-    transition: background 0.2s;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+    margin-bottom: 15px;
+    margin-top: 10px;
 }
 
-.livro-item a[href*='excluirLivro.php'] {
-    margin-top: auto;
+/* Título e Links no Grid */
+.livro-item a {
+    color: var(--primary);
+    font-weight: 600;
+}
+
+.livro-item > a:nth-of-type(2) { /* Título do Livro */
+    font-family: 'Merriweather', serif;
+    font-size: 1.15rem;
+    line-height: 1.3;
+    margin: 10px 0 5px;
+    display: block;
+    min-height: 2.6em; /* Alinha altura dos títulos */
+}
+
+.meta-info {
+    font-size: 0.9rem;
+    color: var(--text-light);
+    display: block;
+    margin-bottom: 2px;
+}
+
+/* Botões Editar/Excluir dentro do Card */
+.livro-item a[href*="editar"], 
+.livro-item a[href*="excluir"] {
+    display: block;
+    width: 100%;
+    padding: 8px 0;
+    margin-top: 8px;
+    font-size: 0.8rem;
+    border-radius: 6px;
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+.livro-item a[href*="editar"] {
+    background-color: #f1f2f6;
+    color: var(--primary);
+}
+.livro-item a[href*="editar"]:hover {
+    background-color: #e2e6ea;
+}
+
+.livro-item a[href*="excluir"] {
+    background-color: transparent;
     color: #e74c3c;
     border: 1px solid transparent;
 }
-.livro-item a[href*='excluirLivro.php']:hover {
-    background-color: #fceceb;
-    border-color: #e74c3c;
+.livro-item a[href*="excluir"]:hover {
+    background-color: #fdf0ef;
+    border-color: #fadbd8;
 }
 
-.livro-item a[href*='editarLivro.php'] {
-    color: var(--primary);
-    border: 1px solid transparent;
-    margin-bottom: 0;
-}
-.livro-item a[href*='editarLivro.php']:hover {
-    background-color: #edf2f7;
-    border-color: var(--primary);
-}
-
-.livro-item br { display: block; margin: 2px 0; content: " "; }
-
-/* --- Barra de Busca --- */
-body > form[action="livros.php"] {
-    flex-direction: row;
-    padding: 8px;
-    border-radius: 50px;
-    background: white;
-    max-width: 600px;
-    gap: 0;
-}
-body > form[action="livros.php"] input {
-    border: none;
-    background: transparent;
-    box-shadow: none;
-    padding-left: 20px;
-    border-radius: 50px 0 0 50px;
-}
-body > form[action="livros.php"] button {
-    border-radius: 50px;
-    margin: 4px;
-    padding: 10px 30px;
-    box-shadow: none;
+/* === TAG LIDO (Faixa Diagonal Profissional) === */
+.tag-lido {
+    position: absolute;
+    top: 20px;
+    right: -32px;
+    background-color: var(--success);
+    color: #fff;
+    font-size: 0.7rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    padding: 6px 35px;
+    transform: rotate(45deg);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    z-index: 10;
+    letter-spacing: 1px;
+    pointer-events: none; /* Não interfere no clique */
 }
 
-/* --- Sugestões --- */
-#sugestoes {
-    background: white;
-    border: 1px solid var(--primary); border-top: none;
-    border-radius: 0 0 4px 4px;
-    position: relative !important; width: 100% !important;
-    top: auto !important; left: auto !important;
-    margin-top: -16px; margin-bottom: 10px;
-    z-index: 100;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    max-height: 250px; overflow-y: auto;
-}
-.sugestao-item {
-    display: flex; align-items: center; gap: 15px;
-    padding: 12px 15px; border-bottom: 1px solid #f5f5f5;
-    cursor: pointer; transition: background 0.2s;
-}
-.sugestao-item:hover { background-color: #f0f4f8; }
-.sugestao-item img { border-radius: 2px; }
-.sugestao-texto strong { color: var(--primary); display: block; }
-
-/* --- PÁGINA DE DETALHES (Ver Livro) --- */
+/* === PÁGINA DETALHES (Ver Livro) === */
 .container {
     background: var(--bg-card);
     padding: 50px;
-    border-radius: var(--border-radius);
-    box-shadow: var(--shadow-soft);
-    margin: 20px auto;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-card);
+    width: 100%;
     max-width: 900px;
     display: flex;
     gap: 40px;
     align-items: flex-start;
+    margin-top: 20px;
 }
 
-.capa-livro { flex-shrink: 0; width: 300px; }
-.capa-livro img { width: 100%; border-radius: 4px; box-shadow: 0 10px 25px rgba(0,0,0,0.15); }
+.capa-livro img {
+    max-width: 300px;
+    width: 100%;
+    border-radius: 8px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
 
 .info-livro {
     flex: 1;
-    min-width: 0;
     display: flex;
-    flex-direction: column; /* Garante que os itens fiquem um embaixo do outro */
+    flex-direction: column;
 }
 
 .info-livro h2 {
-    text-align: left; margin-top: 0;
-    border-bottom: 1px solid #eee; padding-bottom: 15px;
+    font-size: 2.2rem;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
     color: var(--primary);
 }
-.info-livro strong { color: var(--primary); }
 
-/* === RESENHA PROFISSIONAL (Bloco de Citação) === */
-/* Seletor focado: O parágrafo logo após o título H3 "Resenha" ou com a classe */
-.info-livro h3 + p, .resenha-box {
-    background-color: #fdfbf7;
-    border-left: 4px solid var(--accent);
-    padding: 20px 25px;
-    margin: 15px 0 25px 0;
-    border-radius: 0 8px 8px 0;
-    color: #4a4a4a;
-    font-style: italic;
-    line-height: 1.8;
-    position: relative;
-    box-shadow: inset 0 0 15px rgba(0,0,0,0.02);
+.info-livro p {
+    font-size: 1.1rem;
+    margin: 8px 0;
+    color: var(--text-main);
 }
 
-/* Aspas decorativas via CSS */
-.info-livro h3 + p::before, .resenha-box::before {
+.info-livro strong {
+    color: var(--primary);
+    font-weight: 700;
+}
+
+/* === RESENHA (Estilo Profissional) === */
+.resenha-box, .info-livro h3 + p {
+    background-color: #f8f9fa; /* Cinza muito claro */
+    border-left: 5px solid var(--danger); /* Linha vertical de destaque */
+    padding: 25px 30px;
+    margin: 25px 0;
+    border-radius: 0 8px 8px 0;
+    font-family: 'Merriweather', serif;
+    font-style: italic;
+    color: #4a4a4a;
+    line-height: 1.8;
+    position: relative;
+    box-shadow: inset 0 0 20px rgba(0,0,0,0.02);
+}
+
+/* Aspas decorativas gigantes */
+.resenha-box::before, .info-livro h3 + p::before {
     content: "“";
     font-family: serif;
-    font-size: 4rem;
-    color: rgba(192, 57, 43, 0.1);
+    font-size: 5rem;
+    color: rgba(0,0,0,0.05);
     position: absolute;
-    top: -15px;
+    top: -20px;
     left: 10px;
     line-height: 1;
     pointer-events: none;
 }
 
-/* === BOTÕES DE AÇÃO (Ver Livro) === */
+/* Botões de Ação na Página de Detalhes */
+.botoes-acao {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-top: 30px;
+    border-top: 1px solid #eee;
+    padding-top: 20px;
+}
 
-/* Transforma os links em botões reais */
+/* Links que parecem botões */
 .info-livro a.btn-lido, 
-.info-livro a.btn-desmarcar {
-    display: inline-block !important;
-    text-align: center;
-    padding: 12px 30px !important;
-    border-radius: 50px !important;
-    font-weight: 600 !important;
-    font-size: 0.95rem !important;
-    text-decoration: none !important;
-    margin-top: 20px !important;
-    margin-bottom: 10px !important;
-    transition: all 0.3s ease;
-    width: fit-content; /* Ocupa apenas o espaço necessário */
-}
-
-/* Botão Lido (Ação Principal) */
-.info-livro a.btn-lido {
-    background-color: var(--primary) !important;
-    color: white !important;
-    border: 2px solid var(--primary) !important;
-    box-shadow: 0 4px 6px rgba(44, 62, 80, 0.2);
-}
-.info-livro a.btn-lido:hover {
-    background-color: transparent !important;
-    color: var(--primary) !important;
-    transform: translateY(-2px);
-}
-
-/* Botão Desmarcar (Estilo Outline/Secundário) */
-.info-livro a.btn-desmarcar {
-    background-color: white !important;
-    color: var(--success) !important;
-    border: 2px solid var(--success) !important;
-}
-.info-livro a.btn-desmarcar:hover {
-    background-color: var(--success) !important;
-    color: white !important;
-    transform: translateY(-2px);
-}
-
-/* Botão Voltar (Estilo Link Discreto) */
+.info-livro a.btn-desmarcar,
 .info-livro a[href="livros.php"] {
-    display: inline-block;
-    margin-top: 15px;
-    color: #7f8c8d;
-    font-size: 0.9rem;
     text-decoration: none;
-    border-bottom: 1px solid transparent;
-    transition: color 0.2s;
-    width: fit-content;
-}
-.info-livro a[href="livros.php"]:hover {
-    color: var(--primary);
-    border-bottom-color: var(--primary);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
 
-/* Responsividade */
-@media (max-width: 768px) {
-    .container { flex-direction: column; align-items: center; padding: 30px; }
-    .livro-lista { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); }
-    .capa-livro { width: 100%; max-width: 250px; }
+/* === SUGESTÕES (JavaScript) === */
+#sugestoes {
+    background: white;
+    border: 1px solid #eee;
+    border-top: none; /* Remove borda superior para parecer continuação do input */
     
-    /* Centraliza botões no mobile */
-    .info-livro a.btn-lido, 
-    .info-livro a.btn-desmarcar,
-    .info-livro a[href="livros.php"] {
-        align-self: center;
+    /* Posicionamento preciso logo abaixo do input Título */
+    position: absolute;
+    top: 88px; /* 40px (padding form) + 48px (altura input aprox) */
+    left: 40px; /* Alinha com o início do input */
+    right: 40px; /* Alinha com o fim do input */
+    width: auto; /* Respeita left/right */
+    
+    max-height: 250px;
+    overflow-y: auto;
+    z-index: 1000;
+    border-radius: 0 0 8px 8px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+.sugestao-item {
+    padding: 12px 20px;
+    border-bottom: 1px solid #f9f9f9;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    transition: background 0.2s;
+}
+
+.sugestao-item:hover {
+    background-color: #f0f4f8;
+}
+
+/* === RESPONSIVIDADE === */
+@media (max-width: 850px) {
+    .container {
+        flex-direction: column;
+        align-items: center;
+        padding: 30px;
+    }
+    
+    .capa-livro img {
+        max-width: 220px;
+    }
+    
+    .botoes-acao {
+        flex-direction: column;
         width: 100%;
-        max-width: 300px;
+    }
+    
+    .botoes-acao a {
+        width: 100%;
+    }
+    
+    body > form[action="livros.php"] {
+        flex-direction: column;
+        border-radius: 12px;
+    }
+    
+    body > form[action="livros.php"] input,
+    body > form[action="livros.php"] button {
+        width: 100%;
+        border-radius: 8px;
+        padding-left: 15px;
     }
 }
