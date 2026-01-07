@@ -32,9 +32,8 @@ require 'funcoes.php';
         unset($_SESSION['feedback']);
     }
     ?>
-    <?php   
 
-    
+    <?php   
 
 if (isset($_GET['busca']) && !empty($_GET['busca'])) {
     $termo = "%" . $_GET['busca'] . "%";
@@ -55,15 +54,19 @@ if (count($livros) == 0 && isset($_GET['busca'])) {
     } else {
         echo "<div class='livro-lista'>";
     foreach ($livros as $livro){
-        if ($livro['lido'] == 1) {
-            echo "<span class='tag-lido' style='color: green;'>LIDO</span>";
-        }
+    
     $estrelas = gerarEstrelas($livro['nota']);
+    
     echo "<div class='livro-item'>";
+    
+    if ($livro['lido'] == 1) {
+        echo "<span class='tag-lido'>LIDO</span>";
+    }
+
     echo "<a href='verLivro.php?id=" . htmlspecialchars($livro['id']) . "'><img src='" . htmlspecialchars($livro['capa']) . "' alt='Capa do Livro'></a><br>";
     echo "<a href='verLivro.php?id=" . htmlspecialchars($livro['id']) . "'>" . htmlspecialchars($livro['titulo']) . "</a><br>";
-    echo $livro['autor'] . "<br>";
-    echo $livro['genero'] . "<br>";
+    echo "<span class='meta-info'>" . $livro['autor'] . "</span><br>";
+    echo "<span class='meta-info'>" . $livro['genero'] . "</span><br>";
     echo "Nota: " . $estrelas . " (" . $livro['nota'] . ")<br><br>";
     echo "<a href='excluirLivro.php?id=" . htmlspecialchars($livro['id']) . "'>Excluir Livro</a><br>";
     echo "<a href='editarLivro.php?id=" . htmlspecialchars($livro['id']) . "'> Editar Livro</a><br><br>";

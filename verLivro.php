@@ -13,12 +13,6 @@ $stmt = $pdo->prepare($sql);
 $stmt->execute([$id, $_SESSION['id']]);
 $livro = $stmt->fetch(PDO::FETCH_ASSOC);
 
-if ($livro['lido'] == 1) {
-    echo "<a href='marcarLido.php?id=" . $livro['id'] . "'class='btn-desmarcar'>Marcar como Não Lido</a>";
-} else {
-    echo "<a href='marcarLido.php?id=" . $livro['id'] . "'class='btn-lido'>Marcar como Lido</a>";
-}
-
 if (!$livro) {
     echo "Livro não encontrado ou você não tem permissão para visualizá-lo.";
     header("Location: livros.php");
@@ -56,10 +50,22 @@ $urlCapaQualidade = str_replace('http://', 'https://', $urlCapaQualidade);
                     echo $estrelas . " (" . $livro['nota'] . ")"; 
                 ?>
             </p>
+            
             <h3>Resenha:</h3>
-            <p><?php echo htmlspecialchars($livro['resenha']); ?></p>
+            <div class="resenha-box">
+                <?php echo htmlspecialchars($livro['resenha']); ?>
+            </div>
+            <div class="botoes-acao">
+                <?php
+                if ($livro['lido'] == 1) {
+                    echo "<a href='marcarLido.php?id=" . $livro['id'] . "' class='btn-desmarcar'>✓ Lido (Desmarcar)</a>";
+                } else {
+                    echo "<a href='marcarLido.php?id=" . $livro['id'] . "' class='btn-lido'>Marcar como Lido</a>";
+                }
+                ?>
 
-            <a href="livros.php">Voltar para a estante</a>
+                <a href="livros.php" class="btn-voltar">← Voltar para a estante</a>
+            </div>
         </div>
     </div>
 
