@@ -8,10 +8,16 @@ require "conexao.php";
 require "funcoes.php";
 
 $id = $_GET['id'];
-$sql = "SELECT * FROM livros WHERE id = ?";
+$sql = "SELECT * FROM livros WHERE id = ? AND user_id = ?";
 $stmt = $pdo->prepare($sql);
-$stmt->execute([$id]);
+$stmt->execute([$id, $_SESSION['id']]);
 $livro = $stmt->fetch(PDO::FETCH_ASSOC);
+
+if (!$livro) {
+    echo "Livro não encontrado ou você não tem permissão para visualizá-lo.";
+    header("Location: livros.php");
+    exit;
+}
 
 $urlCapaOriginal = $livro['capa'];
 $urlCapaQualidade = str_replace('zoom=1', 'zoom=3', $urlCapaOriginal);

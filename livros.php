@@ -35,16 +35,19 @@ require 'funcoes.php';
 
     <?php   
 
+    
+
 if (isset($_GET['busca']) && !empty($_GET['busca'])) {
     $termo = "%" . $_GET['busca'] . "%";
-    $sql = "SELECT * FROM livros WHERE titulo LIKE ? OR autor LIKE ?";
+    $sql = "SELECT * FROM livros WHERE (titulo LIKE ? OR autor LIKE ?) AND user_id = ?";
     $stmt = $pdo->prepare($sql);
-    $stmt->execute([$termo, $termo]);
+    $stmt->execute([$termo, $termo, $_SESSION['id']]);
     $livros = $stmt->fetchAll(PDO::FETCH_ASSOC);
     
 }else {
-    $sql = "SELECT * FROM livros";
-    $stmt = $pdo->query($sql);
+    $sql = "SELECT * FROM livros WHERE user_id = ?";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([$_SESSION['id']]);
     $livros = $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 

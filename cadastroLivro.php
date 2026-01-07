@@ -11,6 +11,7 @@ if(!isset($_SESSION['id'])){
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     include 'conexao.php';
 
+    $user_id = $_SESSION['id'];
     $titulo = $_POST['titulo'];
     $autor = $_POST['autor'];
     $genero = $_POST['genero'];
@@ -19,12 +20,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nota = $_POST['nota'];
 
 
-     $sql = "INSERT INTO livros (titulo, autor, genero, resenha, capa, nota) VALUES (?, ?, ?, ?, ?, ?)";
+     $sql = "INSERT INTO livros (user_id, titulo, autor, genero, resenha, capa, nota) VALUES (?,?, ?, ?, ?, ?, ?)";
      $stmt = $pdo->prepare($sql);
 
 
      try {
-         $stmt->execute([$titulo, $autor, $genero, $resenha, $capa, $nota]);
+         $stmt->execute([$user_id, $titulo, $autor, $genero, $resenha, $capa, $nota]);
          echo "Livro cadastrado com sucesso!";
      } catch (PDOException $e) {
         if ($e->getCode() == 23000) {
