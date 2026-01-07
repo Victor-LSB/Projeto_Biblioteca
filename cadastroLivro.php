@@ -57,6 +57,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <textarea  name="resenha" placeholder="Resenha" required></textarea><br>
         <input type="hidden" id="capa_url" name="capa" required><br>
         <input type="number" name="nota" step="0.5" min="0" max="5" placeholder="Nota" required><br>
+        <p>Já leu este livro?</p>
+        <label>
+            <input type="radio" name="lido" value="1" > Sim
+        </label>
+        <label>
+            <input type="radio" name="lido" value="0" checked> Ainda não
+        </label><br>
         <button type="submit">Cadastrar Livro</button>
     </form>
     <button onclick="window.location.href='livros.php'">Ver Livros</button>

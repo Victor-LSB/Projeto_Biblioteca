@@ -13,6 +13,12 @@ $stmt = $pdo->prepare($sql);
 $stmt->execute([$id, $_SESSION['id']]);
 $livro = $stmt->fetch(PDO::FETCH_ASSOC);
 
+if ($livro['lido'] == 1) {
+    echo "<a href='marcarLido.php?id=" . $livro['id'] . "'class='btn-desmarcar'>Marcar como Não Lido</a>";
+} else {
+    echo "<a href='marcarLido.php?id=" . $livro['id'] . "'class='btn-lido'>Marcar como Lido</a>";
+}
+
 if (!$livro) {
     echo "Livro não encontrado ou você não tem permissão para visualizá-lo.";
     header("Location: livros.php");

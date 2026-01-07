@@ -32,7 +32,6 @@ require 'funcoes.php';
         unset($_SESSION['feedback']);
     }
     ?>
-
     <?php   
 
     
@@ -56,6 +55,9 @@ if (count($livros) == 0 && isset($_GET['busca'])) {
     } else {
         echo "<div class='livro-lista'>";
     foreach ($livros as $livro){
+        if ($livro['lido'] == 1) {
+            echo "<span class='tag-lido' style='color: green;'>LIDO</span>";
+        }
     $estrelas = gerarEstrelas($livro['nota']);
     echo "<div class='livro-item'>";
     echo "<a href='verLivro.php?id=" . htmlspecialchars($livro['id']) . "'><img src='" . htmlspecialchars($livro['capa']) . "' alt='Capa do Livro'></a><br>";
