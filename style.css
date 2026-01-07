@@ -417,3 +417,22 @@ body > button:hover {
         border-radius: 4px;
     }
 }
+
+.sugestao-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+}
+
+.sugestao-texto {
+    display: flex;
+    flex-direction: column;
+}
+
+.sugestao-texto span {
+    font-size: 0.8em;
+    color: #666;
+}

@@ -4,6 +4,8 @@ const campoCapa = document.getElementById('capa_url');
 const campoAutor = document.getElementById('autor');
 const campoGenero = document.getElementById('genero');
 
+
+
 let timer;
 campoTitulo.addEventListener('keyup', function() {
     clearTimeout(timer);
@@ -20,12 +22,24 @@ campoTitulo.addEventListener('keyup', function() {
 
                 if (dados.items) {
                     dados.items.forEach(item => {
-                        const p = document.createElement('p');
-                        p.textContent = item.volumeInfo.title;
-                        p.style.cursor = 'pointer';
+                        const div = document.createElement('div');
+                        div.className = 'sugestao-item';
+                      
+                        const info = item.volumeInfo;
+                        const capa = info.imageLinks ? info.imageLinks.thumbnail.replace('zoom=1', 'zoom=5') : '';
+                        const ano = info.publishedDate ? ` (${info.publishedDate.substring(0, 4)})` : 'N/A';
 
-                        p.onclick = function() {
-                            campoTitulo.value = item.volumeInfo.title;
+                        div.innerHTML = `
+                            <img src="${capa}" style="width: 40px; height: 60px; object-fit: cover;">
+                            <div class="sugestao-texto">
+                                <strong>${info.title}</strong>${ano}<br>
+                                <em>${info.authors ? info.authors.join(', ') : 'Autor Desconhecido'}</em>
+                            </div>
+                        `;
+                        divSugestoes.appendChild(div);
+
+                        div.onclick = function() {
+                            campoTitulo.value = info.title;
                             let urlCapa = item.volumeInfo.imageLinks ? item.volumeInfo.imageLinks.thumbnail : '';
                             urlCapa = urlCapa.replace('zoom=1', 'zoom=5');
                             campoCapa.value = urlCapa;
@@ -33,7 +47,7 @@ campoTitulo.addEventListener('keyup', function() {
                             campoGenero.value = item.volumeInfo.categories ? item.volumeInfo.categories.join(', ') : '';
                             divSugestoes.style.display = 'none';
                         };
-                        divSugestoes.appendChild(p);
+                        divSugestoes.appendChild(div);
                     });
                 }
       });
