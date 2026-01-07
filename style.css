@@ -1,0 +1,53 @@
+.livro-lista {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.livro-item {
+    border: 1px solid #ccc;
+    padding: 15px;
+    width: 200px;
+    text-align: center;
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.livro-item img {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 10px;
+}
+
+#sugestoes {
+    width: 100%; 
+    max-width: 400px; 
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    border-radius: 0 0 8px 8px; 
+    overflow: hidden; 
+}
+
+#sugestoes p {
+    padding: 12px;
+    margin: 0;
+    transition: background 0.2s; 
+}
+
+#sugestoes p:hover {
+    background-color: #f0f0f0;
+}
+
+.livro-item {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px; 
+    padding: 15px;
+    width: 200px; 
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1); 
+    text-align: center;
+    transition: transform 0.2s; 
+}
+
+.livro-item:hover {
+    transform: translateY(-5px); 
+}
