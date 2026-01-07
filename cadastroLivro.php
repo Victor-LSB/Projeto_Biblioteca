@@ -6,7 +6,7 @@ if(!isset($_SESSION['id'])){
     exit;
 }
 
-echo "Bem-vindo, " . htmlspecialchars($_SESSION['usuario_nome']) . "!";
+
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     include 'conexao.php';
@@ -44,11 +44,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="style.css">
     <script src="javascript.js" defer></script>
 </head>
 <body>
     <form action="" method="post">
-        <input type="text" id="titulo" name="titulo" placeholder="Titulo" required><br>
+        <input type="text" id="titulo" name="titulo" placeholder="Titulo" autocomplete="off" required><br>
         <div id="sugestoes" style="border: 1px solid #ccc; display: none; position: absolute; background-color: white; z-index: 100;"></div>
         <input type="text" name="autor" id="autor" placeholder="Autor" required><br>
         <input type="text" id="genero" name="genero" placeholder="Genero" required><br>

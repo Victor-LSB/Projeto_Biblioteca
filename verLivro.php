@@ -12,6 +12,10 @@ $sql = "SELECT * FROM livros WHERE id = ?";
 $stmt = $pdo->prepare($sql);
 $stmt->execute([$id]);
 $livro = $stmt->fetch(PDO::FETCH_ASSOC);
+
+$urlCapaOriginal = $livro['capa'];
+$urlCapaQualidade = str_replace('zoom=1', 'zoom=3', $urlCapaOriginal);
+$urlCapaQualidade = str_replace('http://', 'https://', $urlCapaQualidade);
 ?>
 
 <!DOCTYPE html>
@@ -19,23 +23,7 @@ $livro = $stmt->fetch(PDO::FETCH_ASSOC);
 <head>
     <meta charset="UTF-8">
     <title>Detalhes do Livro</title>
-    <style>
-        .container {
-            display: flex; /* Isso coloca os itens lado a lado */
-            gap: 20px; /* Espaço entre a capa e o texto */
-            padding: 20px;
-        }
-        .capa-livro {
-            width: 300px; /* Tamanho fixo para a capa */
-        }
-        .capa-livro img {
-            width: 100%;
-            border-radius: 10px; /* Borda arredondada bonita */
-        }
-        .info-livro {
-            flex: 1; /* O texto ocupa o resto do espaço */
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
@@ -43,7 +31,7 @@ $livro = $stmt->fetch(PDO::FETCH_ASSOC);
 
     <div class="container">
         <div class="capa-livro">
-            <img src="<?php echo htmlspecialchars($livro['capa']); ?>" alt="Capa do Livro">
+            <img src="<?php echo htmlspecialchars($urlCapaQualidade); ?>" alt="Capa do Livro">
         </div>
 
         <div class="info-livro">

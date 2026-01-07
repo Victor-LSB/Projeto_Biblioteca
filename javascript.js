@@ -4,11 +4,15 @@ const campoCapa = document.getElementById('capa_url');
 const campoAutor = document.getElementById('autor');
 const campoGenero = document.getElementById('genero');
 
+let timer;
 campoTitulo.addEventListener('keyup', function() {
-    let busca = campoTitulo.value;
+    clearTimeout(timer);
+    timer = setTimeout(function() {
+        let busca = campoTitulo.value.trim();
 
     if (busca.length > 3) {
-        fetch(`https://www.googleapis.com/books/v1/volumes?q=intitle:${busca}&maxResults=5`)
+        let termoExato = encodeURIComponent(`intitle:${busca}`);
+        fetch(`https://www.googleapis.com/books/v1/volumes?q=${termoExato}&printType=books&orderBy=relevance&maxResults=5`)
             .then(res => res.json())
             .then(dados => {
                 divSugestoes.innerHTML = '';
@@ -22,7 +26,9 @@ campoTitulo.addEventListener('keyup', function() {
 
                         p.onclick = function() {
                             campoTitulo.value = item.volumeInfo.title;
-                            campoCapa.value = item.volumeInfo.imageLinks ? item.volumeInfo.imageLinks.thumbnail : '';
+                            let urlCapa = item.volumeInfo.imageLinks ? item.volumeInfo.imageLinks.thumbnail : '';
+                            urlCapa = urlCapa.replace('zoom=1', 'zoom=5');
+                            campoCapa.value = urlCapa;
                             campoAutor.value = item.volumeInfo.authors ? item.volumeInfo.authors.join(', ') : '';
                             campoGenero.value = item.volumeInfo.categories ? item.volumeInfo.categories.join(', ') : '';
                             divSugestoes.style.display = 'none';
@@ -34,4 +40,6 @@ campoTitulo.addEventListener('keyup', function() {
     }  else {
         divSugestoes.style.display = 'none';
     }
-});
+    } , 300);
+    
+}); 
