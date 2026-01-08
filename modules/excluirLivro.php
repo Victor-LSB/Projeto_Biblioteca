@@ -6,12 +6,13 @@ if(!isset($_SESSION['id'])){
     exit;
 }
 
-require 'conexao.php';
+require '/config/conexao.php';
 $id = $_GET['id'];
-$sql = "DELETE FROM livros WHERE id = ?";
+$user_id = $_SESSION['id'];
+$sql = "DELETE FROM livros WHERE id = ? AND user_id = ?";
 $stmt = $pdo->prepare($sql);
 try {
-    $stmt->execute([$id]);
+    $stmt->execute([$id, $user_id]);
     $_SESSION['feedback'] = [
         'tipo' => 'sucesso',
         'mensagem' => 'Livro excluído com sucesso!'

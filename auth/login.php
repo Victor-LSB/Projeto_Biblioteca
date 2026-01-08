@@ -2,7 +2,7 @@
 session_start();
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
-    include 'conexao.php';
+    include '/config/conexao.php';
 
     $email = $_POST['email'];
     $senha_digitada = $_POST['senha'];

@@ -9,7 +9,7 @@ if(!isset($_SESSION['id'])){
 
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    include 'conexao.php';
+    include '/config/conexao.php';
 
     $user_id = $_SESSION['id'];
     $titulo = $_POST['titulo'];
@@ -56,7 +56,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <input type="text" name="autor" id="autor" placeholder="Autor" required><br>
         <input type="text" id="genero" name="genero" placeholder="Genero" required><br>
         <textarea  name="resenha" placeholder="Resenha" required></textarea><br>
-        <input type="hidden" id="capa_url" name="capa" required><br>
+        <input type="hidden" id="capa_url" name="capa"><br>
         <input type="number" name="nota" step="0.5" min="0" max="5" placeholder="Nota" required><br>
         <p>Já leu este livro?</p>
         <label>

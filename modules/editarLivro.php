@@ -4,7 +4,7 @@ if(!isset($_SESSION['id'])){
     header("Location: login.php");
     exit;
 }
-require 'conexao.php';
+require '/config/conexao.php';
 if ($_SERVER["REQUEST_METHOD"] == "POST"){
     
     $id = $_GET['id'];

@@ -5,8 +5,8 @@ if(!isset($_SESSION['id'])){
     header("Location: login.php");
     exit;
 }
-require 'conexao.php';
-require 'funcoes.php';
+require "/config/conexao.php";
+require "/include/funcoes.php";
 
 ?>
 

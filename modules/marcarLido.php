@@ -1,7 +1,7 @@
 <?php
 
 session_start();
-require 'conexao.php';
+require '/config/conexao.php';
 
 if (isset($_GET['id']) && isset($_SESSION['id'])) {
     $id_livro = $_GET['id'];
