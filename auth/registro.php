@@ -2,6 +2,9 @@
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     include '../config/conexao.php';
 
+    new Conexao();
+    $pdo = (new Conexao())->conectar();
+
     $nome = $_POST['nome'];
     $email = $_POST['email'];
     $senha_digitada = $_POST['senha'];

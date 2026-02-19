@@ -11,6 +11,9 @@ if(!isset($_SESSION['id'])){
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     include '../config/conexao.php';
 
+    new Conexao();
+    $pdo = (new Conexao())->conectar();
+
     $user_id = $_SESSION['id'];
     $titulo = $_POST['titulo'];
     $autor = $_POST['autor'];

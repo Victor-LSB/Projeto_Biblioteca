@@ -7,23 +7,17 @@ if(!isset($_SESSION['id'])){
 }
 
 require '../config/conexao.php';
+require '../classes/livro.php';
+
+$pdo = (new Conexao())->conectar();
+$excluirLivro = new Livro($pdo);
+
 $id = $_GET['id'];
 $user_id = $_SESSION['id'];
-$sql = "DELETE FROM livros WHERE id = ? AND user_id = ?";
-$stmt = $pdo->prepare($sql);
-try {
-    $stmt->execute([$id, $user_id]);
-    $_SESSION['feedback'] = [
-        'tipo' => 'sucesso',
-        'mensagem' => 'Livro excluído com sucesso!'
-    ];
-    header("Location: ../modules/livros.php");
-    exit;
-} catch (PDOException $e) {
-    $_SESSION['feedback'] = [
-        'tipo' => 'erro',
-        'mensagem' => 'Erro ao excluir livro: ' . $e->getMessage()
-    ];
+
+if ($id) {
+    $excluirLivro->excluir($id, $user_id);
 }
+
 header("Location: ../modules/livros.php");
 exit;

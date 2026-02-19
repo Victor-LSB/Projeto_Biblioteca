@@ -7,6 +7,11 @@ if(!isset($_SESSION['id'])){
 }
 require "../config/conexao.php";
 require "../includes/funcoes.php";
+require "../classes/livro.php";
+
+
+$pdo = (new Conexao())->conectar();
+$livroObj = new Livro($pdo);
 
 ?>
 
@@ -35,19 +40,14 @@ require "../includes/funcoes.php";
 
     <?php   
 
-if (isset($_GET['busca']) && !empty($_GET['busca'])) {
-    $termo = "%" . $_GET['busca'] . "%";
-    $sql = "SELECT * FROM livros WHERE (titulo LIKE ? OR autor LIKE ?) AND user_id = ?";
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute([$termo, $termo, $_SESSION['id']]);
-    $livros = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    
-}else {
-    $sql = "SELECT * FROM livros WHERE user_id = ?";
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute([$_SESSION['id']]);
-    $livros = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$busca = $_GET['busca'] ?? '';
+if (!empty($busca)) {
+    $livros = $livroObj->buscar($busca, $_SESSION['id']);
+} else {
+    $livros = $livroObj->listar($_SESSION['id']);
 }
+    
+
 
 if (count($livros) == 0 && isset($_GET['busca'])) {
         echo "Nenhum livro encontrado para a busca: " . htmlspecialchars($_GET['busca']);

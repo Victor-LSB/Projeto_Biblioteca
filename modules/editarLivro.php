@@ -5,6 +5,14 @@ if(!isset($_SESSION['id'])){
     exit;
 }
 require '../config/conexao.php';
+require '../classes/livro.php';
+
+
+$pdo = (new Conexao())->conectar();
+$objEditar = new Livro($pdo);
+$id = $_GET['id'];
+$user_id = $_SESSION['id'];
+
 if ($_SERVER["REQUEST_METHOD"] == "POST"){
     
     $id = $_GET['id'];
@@ -14,26 +22,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
     $resenha = $_POST['resenha'];
     $capa = $_POST['capa'];
     $nota = $_POST['nota'];
-    $sql = "UPDATE livros SET titulo = ?, autor = ?, genero = ?, resenha = ?, capa = ?, nota = ? WHERE id = ?";
-    $stmt = $pdo->prepare($sql);
-    try {
-        $stmt->execute([$titulo, $autor, $genero, $resenha, $capa, $nota, $id]);
-        header("Location: ../modules/livros.php");
+    if($objEditar->editar($id, $titulo, $autor, $genero, $resenha, $capa, $nota, $user_id)){
+        header("Location: ../modules/verLivro.php?sucesso=1");
         exit;
+    } 
 
-    } catch (PDOException $e){
-        echo "Erro ao atualizar livro: " . $e->getMessage();
-    }
-
+}
+$id = $_GET['id'];
+    $livro = $objEditar->buscarPorId($id, $_SESSION['id']);
     
-    }
-
-    $id = $_GET['id'];
-    $sql = "SELECT * FROM livros WHERE id = ?";
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute([$id]);
-    $livro = $stmt->fetch(PDO::FETCH_ASSOC);
-
+if (!isset($livro)) {
+    echo "Livro não encontrado ou você não tem permissão para editá-lo.";
+    header("Location: ../modules/livros.php");
+    exit;
+}
 ?>
 
 <!DOCTYPE html>

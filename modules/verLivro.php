@@ -7,6 +7,9 @@ if(!isset($_SESSION['id'])){
 require "../config/conexao.php";
 require "../includes/funcoes.php";
 
+new Conexao();
+$pdo = (new Conexao())->conectar();
+
 $user_id = $_SESSION['id'];
 $id = $_GET['id'];
 $sql = "SELECT * FROM livros WHERE id = ? AND user_id = ?";

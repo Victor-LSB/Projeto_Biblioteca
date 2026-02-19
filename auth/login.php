@@ -1,31 +1,24 @@
 <?php
 session_start();
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    
     include '../config/conexao.php';
+    include '../classes/autenticador.php';
+
+    $conexao = new Conexao();
+    $pdo = $conexao->conectar();
+    $auth = new Autenticador($pdo);
 
     $email = $_POST['email'];
     $senha_digitada = $_POST['senha'];
 
-    $sql = "SELECT * FROM usuarios WHERE email = ?";
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute([$email]);
-    $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
-
-    if($usuario && password_verify($senha_digitada, $usuario["senha"])) {
-        $_SESSION['id'] = $usuario['id'];
-        $_SESSION['usuario_nome'] = $usuario['nome'];
+    if ($auth->logar($email, $senha_digitada)) {
         header("Location: ../modules/livros.php");
-        echo "Login bem-sucedido! Bem-Vindo, " . htmlspecialchars($usuario['nome']) . "!";
         exit;
     } else {
-        echo "Email ou senha incorretos.";
+        echo "<h3>Credenciais inválidas. Tente novamente.</h3>";
     }
 }
 ?>
-
-
-
 
 <!DOCTYPE html>
 <html lang="en">
