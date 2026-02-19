@@ -1,10 +1,10 @@
 <?php
 session_start();
 if(!isset($_SESSION['id'])){
-    header("Location: login.php");
+    header("Location: ../auth/login.php");
     exit;
 }
-require '/config/conexao.php';
+require '../config/conexao.php';
 if ($_SERVER["REQUEST_METHOD"] == "POST"){
     
     $id = $_GET['id'];
@@ -18,7 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
     $stmt = $pdo->prepare($sql);
     try {
         $stmt->execute([$titulo, $autor, $genero, $resenha, $capa, $nota, $id]);
-        header("Location: livros.php");
+        header("Location: ../modules/livros.php");
         exit;
 
     } catch (PDOException $e){
@@ -42,7 +42,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../public/css/style.css">
     <script src="javascript.js" defer></script>
 </head>
 <body>

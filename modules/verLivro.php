@@ -1,21 +1,22 @@
 <?php
 session_start();
 if(!isset($_SESSION['id'])){
-    header("Location: login.php");
+    header("Location: ../auth/login.php");
     exit;
 }
-require "/config/conexao.php";
-require "/include/funcoes.php";
+require "../config/conexao.php";
+require "../includes/funcoes.php";
 
+$user_id = $_SESSION['id'];
 $id = $_GET['id'];
 $sql = "SELECT * FROM livros WHERE id = ? AND user_id = ?";
 $stmt = $pdo->prepare($sql);
-$stmt->execute([$id, $_SESSION['id']]);
+$stmt->execute([$id, $user_id]);
 $livro = $stmt->fetch(PDO::FETCH_ASSOC);
 
 if (!$livro) {
     echo "Livro não encontrado ou você não tem permissão para visualizá-lo.";
-    header("Location: livros.php");
+    header("Location: ../modules/livros.php");
     exit;
 }
 
@@ -29,7 +30,7 @@ $urlCapaQualidade = str_replace('http://', 'https://', $urlCapaQualidade);
 <head>
     <meta charset="UTF-8">
     <title>Detalhes do Livro</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../public/css/style.css">
 </head>
 <body>
 

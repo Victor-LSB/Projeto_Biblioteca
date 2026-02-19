@@ -2,11 +2,11 @@
 session_start();
 
 if(!isset($_SESSION['id'])){
-    header("Location: login.php");
+    header("Location: ../auth/login.php");
     exit;
 }
-require "/config/conexao.php";
-require "/include/funcoes.php";
+require "../config/conexao.php";
+require "../includes/funcoes.php";
 
 ?>
 
@@ -16,7 +16,7 @@ require "/include/funcoes.php";
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../public/css/style.css">
 </head>
 <body>
     <form action="livros.php" method="GET">
@@ -53,15 +53,15 @@ if (count($livros) == 0 && isset($_GET['busca'])) {
         echo "Nenhum livro encontrado para a busca: " . htmlspecialchars($_GET['busca']);
     } else {
         echo "<div class='livro-lista'>";
-    foreach ($livros as $livro){
+        foreach ($livros as $livro){
     
-    $estrelas = gerarEstrelas($livro['nota']);
+        $estrelas = gerarEstrelas($livro['nota']);
     
-    echo "<div class='livro-item'>";
+        echo "<div class='livro-item'>";
     
-    if ($livro['lido'] == 1) {
+        if ($livro['lido'] == 1) {
         echo "<span class='tag-lido'>LIDO</span>";
-    }
+        }
 
     echo "<a href='verLivro.php?id=" . htmlspecialchars($livro['id']) . "'><img src='" . htmlspecialchars($livro['capa']) . "' alt='Capa do Livro'></a><br>";
     echo "<a href='verLivro.php?id=" . htmlspecialchars($livro['id']) . "'>" . htmlspecialchars($livro['titulo']) . "</a><br>";
@@ -76,6 +76,6 @@ if (count($livros) == 0 && isset($_GET['busca'])) {
     }
 ?>
     <button onclick="window.location.href='cadastroLivro.php'">Cadastrar Novo Livro</button>
-    <button onclick="window.location.href='logout.php'">Sair</button>
+    <button onclick="window.location.href='../auth/logout.php'">Sair</button>
 </body>
 </html>

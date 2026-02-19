@@ -2,7 +2,7 @@
 session_start();
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
-    include '/config/conexao.php';
+    include '../config/conexao.php';
 
     $email = $_POST['email'];
     $senha_digitada = $_POST['senha'];
@@ -15,7 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if($usuario && password_verify($senha_digitada, $usuario["senha"])) {
         $_SESSION['id'] = $usuario['id'];
         $_SESSION['usuario_nome'] = $usuario['nome'];
-        header("Location: cadastroLivro.php");
+        header("Location: ../modules/livros.php");
         echo "Login bem-sucedido! Bem-Vindo, " . htmlspecialchars($usuario['nome']) . "!";
         exit;
     } else {
@@ -33,7 +33,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../public/css/style.css">
 </head>
 <body>
     <form action="" method="post">

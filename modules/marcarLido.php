@@ -1,7 +1,7 @@
 <?php
 
 session_start();
-require '/config/conexao.php';
+require '../config/conexao.php';
 
 if (isset($_GET['id']) && isset($_SESSION['id'])) {
     $id_livro = $_GET['id'];
@@ -22,5 +22,5 @@ if (isset($_GET['id']) && isset($_SESSION['id'])) {
     
 }
 
-header("Location: verLivro.php?id=" . $id_livro);
+header("Location: ../modules/verLivro.php?id=" . $id_livro);
 exit;

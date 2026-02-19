@@ -2,14 +2,14 @@
 session_start();
 
 if(!isset($_SESSION['id'])){
-    header("Location: login.php");
+    header("Location: ../auth/login.php");
     exit;
 }
 
 
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    include '/config/conexao.php';
+    include '../config/conexao.php';
 
     $user_id = $_SESSION['id'];
     $titulo = $_POST['titulo'];
@@ -46,8 +46,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="javascript.js" defer></script>
+    <link rel="stylesheet" href="../public/css/style.css">
+    <script src="../public/js/javascript.js" defer></script>
 </head>
 <body>
     <form action="" method="post">
