@@ -10,13 +10,15 @@ if(!isset($_SESSION['id'])){
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     include '../config/conexao.php';
-
-    new Conexao();
+    include '../classes/livro.php';
+    
     $pdo = (new Conexao())->conectar();
+    $objLivro = new Livro($pdo);
+
 
     $user_id = $_SESSION['id'];
-    $titulo = $_POST['titulo'];
-    $autor = $_POST['autor'];
+    $titulo = trim($_POST['titulo']);
+    $autor = trim($_POST['autor']);
     $genero = $_POST['genero'];
     $resenha = $_POST['resenha'];
     $capa = $_POST['capa'];
@@ -24,19 +26,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $lido = $_POST['lido'];
 
 
-     $sql = "INSERT INTO livros (user_id, titulo, autor, genero, resenha, capa, nota, lido) VALUES (?,?, ?, ?, ?, ?, ?, ?)";
-     $stmt = $pdo->prepare($sql);
-
-
-     try {
-         $stmt->execute([$user_id, $titulo, $autor, $genero, $resenha, $capa, $nota, $lido]);
-         echo "Livro cadastrado com sucesso!";
-     } catch (PDOException $e) {
-        if ($e->getCode() == 23000) {
-            echo "<h3>Erro: Livro já cadastrado.</h3>";
-        } else {
-            echo "<h3>Erro ao cadastrar o livro: " . $e->getMessage() ."</h3>";
-        }
+    if ($objLivro->cadastrar($titulo, $autor, $genero, $resenha, $capa, $nota, $lido, $user_id)) {
+        header("Location: livros.php");
+        exit;
+    } else {
+        echo "<h3>Erro ao cadastrar o livro.</h3>";
     }
 }
 ?>

@@ -6,11 +6,11 @@ class Livro {
         $this->pdo = $conexaoPdo;
     }
 
-    public function cadastrar($titulo, $autor, $ano, $user_id) {
-        $sql = "INSERT INTO livros (titulo, autor, ano, user_id) VALUES (?, ?, ?, ?)";
+    public function cadastrar($titulo, $autor, $genero, $resenha, $capa, $nota, $lido, $user_id) {
+        $sql = "INSERT INTO livros (titulo, autor, genero, resenha, capa, nota, lido, user_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         $stmt = $this->pdo->prepare($sql);
         try {
-            $stmt->execute([$titulo, $autor, $ano, $user_id]);
+            $stmt->execute([$titulo, $autor, $genero, $resenha, $capa, $nota, $lido, $user_id]);
             return true;
         } catch (PDOException $e) {
             if ($e->getCode() == 23000) {
