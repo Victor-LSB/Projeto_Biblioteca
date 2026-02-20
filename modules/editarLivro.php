@@ -28,8 +28,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
     } 
 
 }
-$id = $_GET['id'];
-    $livro = $objEditar->buscarPorId($id, $_SESSION['id']);
+
+$livro = $objEditar->buscarPorId($id, $user_id);
+if (!$livro) {
+    echo "Livro não encontrado ou você não tem permissão para editá-lo.";
+    header("Location: ../modules/livros.php");
+    exit;
+}
     
 if (!isset($livro)) {
     echo "Livro não encontrado ou você não tem permissão para editá-lo.";
@@ -45,7 +50,7 @@ if (!isset($livro)) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="../public/css/style.css">
-    <script src="javascript.js" defer></script>
+    <script src="../public/js/javascript.js" defer></script>
 </head>
 <body>
     <form action="" method="post">
@@ -54,7 +59,7 @@ if (!isset($livro)) {
         <input name="autor" id="autor" placeholder="Autor" value="<?php echo htmlspecialchars($livro['autor']); ?>" required><br>
         <input type="text" id="genero" name="genero" placeholder="Genero" value="<?php echo htmlspecialchars($livro['genero']); ?>" required><br>
         <textarea name="resenha" placeholder="Resenha" required ><?php echo htmlspecialchars($livro['resenha']); ?></textarea><br>
-        <input type="hidden" id="capa_url" name="capa" required><br>
+        <input type="hidden" id="capa_url" name="capa" value="<?php echo htmlspecialchars($livro['capa']); ?>" required><br>
         <input type="number" name="nota" step="0.5" min="0" max="5" placeholder="Nota" value="<?php echo $livro['nota']; ?>" required><br>
         <button type="submit">Editar</button>
     </form>
